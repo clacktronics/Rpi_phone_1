@@ -18,19 +18,20 @@ try:
     GPIO.setup(HOOK, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(HOOK, GPIO.RISING)
 
-    already_stopped = True
+    already_played = False
 
     while True:
         if GPIO.event_detected(HOOK) and GPIO.input(HOOK):
-            video.play()
-            already_stopped = False
-            print "play"
-
-        if not already_stopped and not GPIO.input(HOOK):
             video.pause()
             video.set_position(0)
-            already_stopped = True
-            print "hold"
+            already_played = False
+            print "hold - Receiver Down"
+
+        if not already_played and not GPIO.input(HOOK):
+            video.play()
+            already_played = True
+            print "play - Receiver up"
+
 
 except KeyboardInterrupt:
     video.stop()
