@@ -5,7 +5,7 @@ import sys,os
 
 accepted_files = ['wav','mp3','m4a','mp4','aif'] 
 
-omxargs = sys.argv
+omxargs = sys.argv[1:]
 
 files = [elem for elem in os.listdir('files') if elem[0] != '.']
 files = [elem for elem in files if elem[-3:] in accepted_files]
@@ -25,7 +25,7 @@ while True:
     try:
         for file in files:
             otpt = 'files/%s' % file
-            video = omx('korn.mp4', args = omxargs, pause=False)        
+            video = omx(otpt, args=omxargs, pause=True)        
             plays = 0
             played = False
 
@@ -43,7 +43,7 @@ while True:
             print "Next track"
             video.stop()
             del video
-            sleep(1)
+            sleep(.5)
 
     except KeyboardInterrupt:
         video.stop()
@@ -52,3 +52,4 @@ while True:
 
     except Exception as e:
         print e
+        break
