@@ -25,7 +25,8 @@ while True:
     try:
         for file in files:
             otpt = 'files/%s' % file
-            video = omx(otpt, args=omxargs, pause=True)        
+            video = omx(otpt, args=omxargs, pause=True)
+            video_length = video.duration()        
             plays = 0
             played = False
 
@@ -39,6 +40,9 @@ while True:
                     plays +=1
                     already_played = True
                     print "receiver down"
+
+                if video.position() > video_length - 1:
+                    break
 
             print "Next track"
             video.stop()
